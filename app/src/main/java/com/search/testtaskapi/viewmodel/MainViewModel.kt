@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.search.testtaskapi.database.RoomDbApp
 import com.search.testtaskapi.model.ImageData
-import com.search.testtaskapi.model.Images
+import com.search.testtaskapi.model.News
 import com.search.testtaskapi.repository.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-    val myResponse: MutableLiveData<Images> = MutableLiveData()
+    val myResponse: MutableLiveData<News> = MutableLiveData()
 
     private val dao = RoomDbApp.getDatabase(application).dao()
     private val repository = Repository(dao)
@@ -21,7 +21,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getPhotos(tag: String) {
         viewModelScope.launch {
-            val response: Images = repository.getPhotos(tag)
+            val response: News = repository.getPhotos(tag)
             myResponse.value = response
         }
     }

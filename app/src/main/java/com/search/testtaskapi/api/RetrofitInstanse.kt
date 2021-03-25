@@ -7,7 +7,7 @@ object RetrofitInstanse {
 
     private val retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl("https://api.unsplash.com/")
+            .baseUrl("https://api.nytimes.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

@@ -4,8 +4,6 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,53 +24,57 @@ class MainActivity : AppCompatActivity() {
     private val listIm = ArrayList<String>()
     private lateinit var viewModel: MainViewModel
     private val adapter by lazy { ImageAdapter() }
+    private lateinit var category: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        category = intent.getStringExtra("category").toString()
+
+        textView.text = category
+
+        getCurrentData()
+
     }
 
     fun getCurrentData() {
 
+        val tag: String = category
+
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        viewModel.getPhotos(editTextSearch.text.toString())
+        viewModel.getPhotos(tag)
         viewModel.myResponse.observe(this, Observer { response ->
 
-            Log.d("Response", response.results[0].urls.thumb.toString())
-
-            for (i in 0 until response.results.size - 1) {
-                listIm.add(response.results[i].urls.thumb.toString())
-
-                lifecycleScope.launch {
-                    val getbitmap = getBitmap(i)
-
-                    Log.d("tag", getbitmap.toString())
+            if (response != null) {
+                for (i in 0 until response.response.docs.size - 1) {
+                    listIm.add("https://static01.nyt.com/${response.response.docs[i].multimedia[0].url}")
+                    val abstract: String = response.response.docs[i].abstract
+                    val leadParagraph: String = response.response.docs[i].leadParagraph
 
                     lifecycleScope.launch {
-                        val imageData = ImageData(editTextSearch.text.toString(), getBitmap(i))
-                        viewModel.insertImageData(imageData)
+                        val getbitmap = getBitmap(i)
 
+                        lifecycleScope.launch {
+                            val imageData = ImageData(tag, getbitmap)
+                            viewModel.insertImageData(imageData)
+                        }
                     }
                 }
+
+
+                val linearLayoutManager = GridLayoutManager(this, 2)
+                linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+
+                list.layoutManager = linearLayoutManager
+
+                viewModel.readImageData.observe(this, {
+                    adapter.setData(it, this@MainActivity)
+                })
+
+                list.adapter = adapter
             }
-            val linearLayoutManager = GridLayoutManager(this, 2)
-            linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-            list.layoutManager = linearLayoutManager
-
-            list.layoutManager = linearLayoutManager
-
-            viewModel.readImageData.observe(this, {
-                adapter.setData(it, this@MainActivity)
-            })
-
-            list.adapter = adapter
-
         })
-    }
-
-    fun onClickSearch(view: View) {
-        getCurrentData()
     }
 
     private suspend fun getBitmap(count: Int): Bitmap {

@@ -7,11 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.search.testtaskapi.R
-import kotlinx.android.synthetic.main.fragment_second_screen.*
-import kotlinx.android.synthetic.main.list_image.view.*
 
 class SecondScreenFragment : Fragment() {
 

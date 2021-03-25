@@ -1,22 +1,16 @@
 package com.search.testtaskapi.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
-import android.icu.number.NumberFormatter.with
-import android.icu.number.NumberRangeFormatter.with
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.search.testtaskapi.R
-import com.search.testtaskapi.fragment.SecondScreenFragment
 import com.search.testtaskapi.model.ImageData
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_image.view.*
 
 class ImageAdapter() :
@@ -59,13 +53,13 @@ class ImageAdapter() :
         init {
             itemView.setOnClickListener {
 
-                val activity = itemView!!.context as AppCompatActivity
-                val fragment = SecondScreenFragment()
-                val bundle = Bundle()
-                bundle.putString("url", url.toString())
-                fragment.arguments = bundle
-                activity.supportFragmentManager.beginTransaction().replace(R.id.rec, fragment)
-                    .addToBackStack(null).commit()
+//                val activity = itemView!!.context as AppCompatActivity
+//                val fragment = SecondScreenFragment()
+//                val bundle = Bundle()
+//                bundle.putString("url", url.toString())
+//                fragment.arguments = bundle
+//                activity.supportFragmentManager.beginTransaction().replace(R.id.rec, fragment)
+//                    .addToBackStack(null).commit()
 
             }
         }

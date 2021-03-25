@@ -1,21 +1,19 @@
 package com.search.testtaskapi.api
 
-import com.search.testtaskapi.model.Images
+import com.search.testtaskapi.model.News
 import retrofit2.http.GET
-import retrofit2.http.Headers
 import retrofit2.http.Query
+
+private val APIKey: String = "GeFdl5AHdcJG3QJLZfgqq9blH3edqef4"
 
 interface ImagesAPI {
 
-    companion object {
-        const val CLIENT_ID = "L5bobyLq4mVkD0lp59py_L5lfPDKWd1YITivF9yHxIs"
-    }
+//    https://api.nytimes.com/svc/search/v2/articlesearch.json?q=election&api-key=GeFdl5AHdcJG3QJLZfgqq9blH3edqef4
 
-    @Headers("Accept-Version: v1", "Authorization: Client-ID $CLIENT_ID")
-    @GET("search/photos")
+
+    @GET("svc/search/v2/articlesearch.json")
     suspend fun getPhotos(
-        @Query("query") query: String,
-        @Query("page") page: Int,
-        @Query("per_page") perPage: Int
-    ): Images
+        @Query("q") query: String,
+        @Query("api-key") key: String = APIKey
+    ): News
 }
