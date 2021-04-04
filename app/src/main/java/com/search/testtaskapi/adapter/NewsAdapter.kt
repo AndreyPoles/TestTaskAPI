@@ -12,29 +12,29 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.search.testtaskapi.R
 import com.search.testtaskapi.fragment.SecondScreenFragment
-import com.search.testtaskapi.model.ImageData
+import com.search.testtaskapi.model.DataNews
 import kotlinx.android.synthetic.main.list_image.view.*
 
-class ImageAdapter() :
-    RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
+class NewsAdapter() :
+    RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 
     private lateinit var url: Bitmap
-    private var imageDataList = emptyList<ImageData>()
+    private var imageDataList = emptyList<DataNews>()
     private lateinit var context: Context
 
-    fun setData(imageDataList: List<ImageData>, context: Context) {
-        this.imageDataList = imageDataList
+    fun setData(dataNewsList: List<DataNews>, context: Context) {
+        this.imageDataList = dataNewsList
         this.context = context
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsAdapter.ViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.list_image, parent, false)
         return ViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: ImageAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: NewsAdapter.ViewHolder, position: Int) {
 
         val url = imageDataList[position].url!!
         val description = imageDataList[position].tittle

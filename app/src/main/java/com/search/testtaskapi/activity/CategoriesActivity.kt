@@ -29,9 +29,5 @@ class CategoriesActivity : AppCompatActivity() {
         recyclerViewCategory.layoutManager = LinearLayoutManager(this)
         val adapter = CategoriesAdapter(list, this)
         recyclerViewCategory.adapter = adapter
-
-
     }
-
-
 }

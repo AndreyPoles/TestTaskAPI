@@ -6,10 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.search.testtaskapi.converts.Converts
-import com.search.testtaskapi.model.ImageData
+import com.search.testtaskapi.model.DataNews
 
-
-@Database(entities = [ImageData::class], version = 1, exportSchema = false)
+@Database(entities = [DataNews::class], version = 1, exportSchema = false)
 @TypeConverters(Converts::class)
 abstract class RoomDbApp : RoomDatabase() {
 
@@ -28,7 +27,7 @@ abstract class RoomDbApp : RoomDatabase() {
         private fun buildDatabase(context: Context) =
             Room.databaseBuilder(
                 context.applicationContext,
-                RoomDbApp::class.java, "newsDBases"
+                RoomDbApp::class.java, "newsDataBases"
             ).build()
     }
 }

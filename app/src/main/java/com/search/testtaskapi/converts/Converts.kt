@@ -18,5 +18,4 @@ class Converts {
     fun toBitmap(byteArray: ByteArray): Bitmap {
         return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
     }
-
 }

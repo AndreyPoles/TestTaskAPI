@@ -10,7 +10,6 @@ interface ImagesAPI {
 
 //    https://api.nytimes.com/svc/search/v2/articlesearch.json?q=election&api-key=GeFdl5AHdcJG3QJLZfgqq9blH3edqef4
 
-
     @GET("svc/search/v2/articlesearch.json")
     suspend fun getPhotos(
         @Query("q") query: String,

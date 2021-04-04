@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "news_tables")
-data class ImageData(
+data class DataNews(
     @field:SerializedName("Name")
     var name: String = "",
     @field:SerializedName("Tittle")

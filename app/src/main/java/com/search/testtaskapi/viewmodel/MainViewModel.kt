@@ -3,7 +3,7 @@ package com.search.testtaskapi.viewmodel
 import android.app.Application
 import androidx.lifecycle.*
 import com.search.testtaskapi.database.RoomDbApp
-import com.search.testtaskapi.model.ImageData
+import com.search.testtaskapi.model.DataNews
 import com.search.testtaskapi.model.News
 import com.search.testtaskapi.repository.Repository
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +17,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val dao = RoomDbApp.getDatabase(application).dao()
     private val repository = Repository(dao)
 
-    fun readImageData(tag: String): LiveData<List<ImageData>> {
+    fun readImageData(tag: String): LiveData<List<DataNews>> {
         return repository.readImageData(tag)
     }
 
@@ -28,15 +28,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun insertImageData(imageData: ImageData) {
+    fun insertImageData(dataNews: DataNews) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.insertImageData(imageData)
+            repository.insertImageData(dataNews)
         }
     }
 
-    suspend fun searchDatabase(tag: String): Boolean {
-
+    fun searchDatabase(tag: String): Boolean {
         return repository.searchDatabase(tag)
-
     }
 }
