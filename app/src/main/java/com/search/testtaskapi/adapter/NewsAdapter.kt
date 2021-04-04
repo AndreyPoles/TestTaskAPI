@@ -49,7 +49,7 @@ class NewsAdapter() :
             .into(holder.itemView.imageView)
 
         holder.itemView.setOnClickListener {
-            val activity = holder.itemView!!.context as AppCompatActivity
+            val activity = holder.itemView.context as AppCompatActivity
             val fragment = SecondScreenFragment()
             val bundle = Bundle()
             bundle.putString("tittle", tittle)

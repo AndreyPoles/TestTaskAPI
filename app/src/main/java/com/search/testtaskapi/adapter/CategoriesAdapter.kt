@@ -21,7 +21,7 @@ class CategoriesAdapter(private val list: ArrayList<String>, private val context
     }
 
     override fun onBindViewHolder(holder: CategoriesViewHolder, position: Int) {
-        var item = list[position]
+        val item = list[position]
         holder.itemView.text_categories.text = item
         holder.itemView.setOnClickListener {
             val intent = Intent(

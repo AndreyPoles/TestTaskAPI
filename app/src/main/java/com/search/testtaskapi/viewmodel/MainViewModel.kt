@@ -9,7 +9,6 @@ import com.search.testtaskapi.repository.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     val myResponse: MutableLiveData<News> = MutableLiveData()

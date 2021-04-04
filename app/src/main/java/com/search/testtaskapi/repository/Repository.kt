@@ -11,7 +11,6 @@ class Repository(private val dao: com.search.testtaskapi.database.Dao) {
         return dao.readImageData(tag)
     }
 
-
     suspend fun getPhotos(tag: String): News {
         return RetrofitInstanse.api.getPhotos(tag)
     }
