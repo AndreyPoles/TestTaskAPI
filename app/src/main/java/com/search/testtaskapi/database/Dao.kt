@@ -8,12 +8,14 @@ import com.search.testtaskapi.model.ImageData
 
 @Dao
 interface Dao {
-    @Query("SELECT * FROM my_tab ORDER BY id ASC")
-    fun readImageData(): LiveData<List<ImageData>>
+
+    @Query("SELECT * FROM news_tables Where  name= :tag")
+    fun readImageData(tag: String): LiveData<List<ImageData>>
+
+    @Query("SELECT EXISTS(SELECT 1 FROM news_tables Where  tittle= :tag)")
+    fun searchDatabase(tag: String): Boolean
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertImageData(imageData: ImageData)
 
-    @Delete
-    fun deleteImageData(imageData: ImageData)
 }

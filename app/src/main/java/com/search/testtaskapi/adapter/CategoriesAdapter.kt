@@ -38,6 +38,5 @@ class CategoriesAdapter(private val list: ArrayList<String>, private val context
     }
 
     inner class CategoriesViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
-    }
+        RecyclerView.ViewHolder(itemView)
 }

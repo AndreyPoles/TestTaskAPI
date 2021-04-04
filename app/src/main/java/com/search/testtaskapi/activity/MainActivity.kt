@@ -18,6 +18,7 @@ import coil.request.ImageRequest
 import coil.request.SuccessResult
 import com.search.testtaskapi.model.ImageData
 import com.search.testtaskapi.viewmodel.MainViewModel
+import kotlinx.coroutines.Dispatchers
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,14 +26,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
     private val adapter by lazy { ImageAdapter() }
     private lateinit var category: String
+    private var findTag: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         category = intent.getStringExtra("category").toString()
-
-        textView.text = category
 
         getCurrentData()
 
@@ -41,34 +41,35 @@ class MainActivity : AppCompatActivity() {
     fun getCurrentData() {
 
         val tag: String = category
-
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         viewModel.getPhotos(tag)
+
         viewModel.myResponse.observe(this, Observer { response ->
 
             if (response != null) {
                 for (i in 0 until response.response.docs.size - 1) {
                     listIm.add("https://static01.nyt.com/${response.response.docs[i].multimedia[0].url}")
-                    val abstract: String = response.response.docs[i].abstract
-                    val leadParagraph: String = response.response.docs[i].leadParagraph
 
                     lifecycleScope.launch {
                         val getbitmap = getBitmap(i)
+                        val tittle: String = response.response.docs[i].abstract
+                        val leadParagraph: String = response.response.docs[i].leadParagraph
 
-                        lifecycleScope.launch {
-                            val imageData = ImageData(tag, getbitmap)
-                            viewModel.insertImageData(imageData)
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            if (viewModel.searchDatabase(tittle) == false) {
+                                val imageData = ImageData(tag, tittle, leadParagraph, getbitmap)
+                                viewModel.insertImageData(imageData)
+                            }
                         }
                     }
                 }
-
 
                 val linearLayoutManager = GridLayoutManager(this, 2)
                 linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
 
                 list.layoutManager = linearLayoutManager
 
-                viewModel.readImageData.observe(this, {
+                viewModel.readImageData(tag).observe(this, {
                     adapter.setData(it, this@MainActivity)
                 })
 

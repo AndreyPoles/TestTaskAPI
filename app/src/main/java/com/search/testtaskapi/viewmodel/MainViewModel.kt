@@ -17,7 +17,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val dao = RoomDbApp.getDatabase(application).dao()
     private val repository = Repository(dao)
 
-    val readImageData: LiveData<List<ImageData>> = repository.readImageData
+    fun readImageData(tag: String): LiveData<List<ImageData>> {
+        return repository.readImageData(tag)
+    }
 
     fun getPhotos(tag: String) {
         viewModelScope.launch {
@@ -30,5 +32,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertImageData(imageData)
         }
+    }
+
+    suspend fun searchDatabase(tag: String): Boolean {
+
+        return repository.searchDatabase(tag)
+
     }
 }
